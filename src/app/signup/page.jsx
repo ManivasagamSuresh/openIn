@@ -1,6 +1,7 @@
 "use client"
+import React from 'react'
 
-import Svg from "./components/Svg"
+// import Svg from "./components/Svg"
 import { FcGoogle } from 'react-icons/fc';
 import { DiApple } from 'react-icons/di';
 import { BsGithub } from 'react-icons/bs';
@@ -9,7 +10,8 @@ import { BsLinkedin } from 'react-icons/bs';
 import { BiLogoDiscord } from 'react-icons/bi';
 
 import {  Montserrat, Lato, Poppins } from 'next/font/google'
-import Link from "next/link";
+import Svg from '../components/Svg';
+import Link from 'next/link';
 
 const monteserat = Montserrat({ subsets: ['latin'] });
 const poppins = Poppins({ 
@@ -19,10 +21,9 @@ const lato = Lato({
   weight: '400',
   subsets: ['latin'] })
 
-
-export default function Home() {
+function Signup() {
   return (
-<div className='signin flex h-screen bg-bgSoft'>
+    <div className='signin flex h-screen bg-bgSoft'>
 
   {/* left panel */}
     <div className="left hidden lg:flex flex-col  items-center h-screen  flex-1 bg-bgSoft">
@@ -39,23 +40,14 @@ export default function Home() {
 
     {/* right panel  */}
     <div className="right flexP bg-bgSoft flex lg:ml-24 justify-center items-center lg:gap-5 p-10 md:p-0">
-      <div className="rightContainer flex flex-col gap-2 lg:gap-7 w-full sm:w-4/5 md:w-3/5  lg:w-fit ">
+      <div className="rightContainer flex flex-col gap-2 lg:gap-7 w-full sm:w-3/4 md:w-3/5  lg:w-3/5 ">
         <div>
           
-        <div className={`text-2xl text-black font-bold ${monteserat.className}`}>Sign In</div>
-        <div className={`mb-10 text-black ${lato.className}`}>Sign in to your account</div>
+        <div className={`text-2xl text-black font-bold ${monteserat.className}`}>Sign Up</div>
+        <div className={`mb-10 text-black ${lato.className}`}>Create your account</div>
         </div>
 
-        <div className="signbutton flex flex-col sm:flex-row items-center gap-4 lg:gap-8 ">
-        <div className="gButton flex items-center justify-center gap-2 h-10 w-full lg:w-52 bg-white p-4 rounded-md cursor-pointer">
-          <span className="flex "><FcGoogle size="20px"/> </span>
-          <span className="text-greySoft  ">Sign in with Google</span>
-        </div>
-        <div className="aButton flex items-center justify-center gap-2 h-10 w-full lg:w-52 bg-white p-4 rounded-md cursor-pointer">
-          <span className="flex"><DiApple size="20px"/> </span> 
-          <span className="text-greySoft">Sign in with Apple</span>
-        </div>
-        </div>
+
 
         <form className="flex flex-col bg-white px-5 py-7 lg:py-10 rounded-lg gap-4 lg:gap-8">
           <div className="flex flex-col gap-3">
@@ -67,14 +59,16 @@ export default function Home() {
         <label for="password" className={`${lato.className}`}>Password</label>
         <input id="password" type="password"  className="border rounded-lg h-10 px-5 bg-inputBg border-none focus:outline-none"/>
           </div>
-        <div className="text-link cursor-pointer">Forgot Password?</div>
-        <button className="bg-blueBg p-2 rounded-md text-white font-semibold"> Sign In</button>
+        
+        <button className="bg-blueBg p-2 rounded-md text-white font-semibold">Sign Up</button>
         </form>
         <div className="text-center">
-        Don’t have an account? <span className="text-link cursor-pointer"><Link href="/signup">Register here</Link>  </span>
+        Already have an account? <span className="text-link cursor-pointer"><Link href="/">Sign In</Link>  </span>
         </div>
       </div>
       </div>
 </div>
   )
 }
+
+export default Signup
