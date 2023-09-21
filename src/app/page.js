@@ -1,5 +1,4 @@
 "use client"
-
 import Svg from "./components/Svg"
 import { FcGoogle } from 'react-icons/fc';
 import { DiApple } from 'react-icons/di';
@@ -7,9 +6,8 @@ import { BsGithub } from 'react-icons/bs';
 import { AiFillTwitterCircle } from 'react-icons/ai';
 import { BsLinkedin } from 'react-icons/bs';
 import { BiLogoDiscord } from 'react-icons/bi';
-
-import {  Montserrat, Lato, Poppins } from 'next/font/google'
 import Link from "next/link";
+import {  Montserrat, Lato, Poppins } from 'next/font/google'
 
 const monteserat = Montserrat({ subsets: ['latin'] });
 const poppins = Poppins({ 
@@ -38,12 +36,13 @@ export default function Home() {
     </div>
 
     {/* right panel  */}
-    <div className="right flexP bg-bgSoft flex lg:ml-24 justify-center items-center lg:gap-5 p-10 md:p-0">
+    <div className="right flexP bg-bgSoft flex flex-col  lg:ml-24 justify-center items-center lg:gap-5 px-10 md:py-0">
+      <div className={`text-white bg-blueS lg:hidden w-full text-2xl mb-3 md:text-3xl font-bold text-center py-2 md:py-5 ${monteserat.className}`}>Board.</div>
       <div className="rightContainer flex flex-col gap-2 lg:gap-7 w-full sm:w-4/5 md:w-3/5  lg:w-fit ">
         <div>
           
         <div className={`text-2xl text-black font-bold ${monteserat.className}`}>Sign In</div>
-        <div className={`mb-10 text-black ${lato.className}`}>Sign in to your account</div>
+        <div className={`mb-4 md:mb-10 text-black ${lato.className}`}>Sign in to your account</div>
         </div>
 
         <div className="signbutton flex flex-col sm:flex-row items-center gap-4 lg:gap-8 ">
