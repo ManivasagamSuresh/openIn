@@ -18,7 +18,7 @@ const lato = Lato({
 
 function Menu() {
   return (
-    <div className={`bg-blueS w-11/12 h-full rounded-2xl p-10 text-white flex flex-col justify-between ${monteserat.className}`}>
+    <div className={ `hidden bg-blueS w-11/12 h-full rounded-2xl p-10 text-white lg:flex flex-col justify-between ${monteserat.className}`}>
         <div className='menuMain flex flex-col gap-16 '>
             <div className='text-3xl font-bold'>Board.</div>
             <div className='flex flex-col gap-4 item-center justify-center'>
