@@ -12,7 +12,7 @@ import ProfileForm from './ProfileForm'
 
 const data = false;
 
-function DashboardMain() {
+function DashboardMain({HandleOpen}) {
   return (
     <div className='containerDashboard py-3 px-3 lg:px-10 flex flex-col gap-6 max-w-full min-h-screen relative'>
       <div className='lg:hidden stickyTop z-50'> <MenuMobile/></div>
@@ -24,7 +24,7 @@ function DashboardMain() {
         <div className='flex-1 bg-white  rounded-xl shadow-xl'><Piechart/></div>
         {
          data ?  <div className='flex-1 bg-white  rounded-xl shadow-xl'><Profile/></div>
-         : <div className='flex-1 bg-white  rounded-xl shadow-xl'><AddProfile/></div>
+         : <div className='flex-1 bg-white  rounded-xl shadow-xl'><AddProfile handleOpen={HandleOpen}/></div>
         }
      
       

@@ -36,13 +36,13 @@ export default function Home() {
     </div>
 
     {/* right panel  */}
-    <div className="right flexP bg-bgSoft flex flex-col  lg:ml-24 justify-center items-center lg:gap-5 px-10 md:py-0">
+    <div className="right flexP bg-bgSoft flex flex-col  lg:ml-24 justify-center items-center lg:gap-5 px-10 md:py-5">
       <div className={`text-white bg-blueS lg:hidden w-full text-2xl mb-3 md:text-3xl font-bold text-center py-2 md:py-5 ${monteserat.className}`}>Board.</div>
       <div className="rightContainer flex flex-col gap-2 lg:gap-7 w-full sm:w-4/5 md:w-3/5  lg:w-fit ">
         <div>
           
         <div className={`text-2xl text-black font-bold ${monteserat.className}`}>Sign In</div>
-        <div className={`mb-4 md:mb-10 text-black ${lato.className}`}>Sign in to your account</div>
+        <div className={`mb-4 md:mb-6 text-black ${lato.className}`}>Sign in to your account</div>
         </div>
 
         <div className="signbutton flex flex-col sm:flex-row items-center gap-4 lg:gap-8 ">
@@ -56,7 +56,7 @@ export default function Home() {
         </div>
         </div>
 
-        <form className="flex flex-col bg-white px-5 py-7 lg:py-10 rounded-lg gap-4 lg:gap-8">
+        <form className="flex flex-col bg-white px-5 py-7 lg:py-8 rounded-lg gap-4 lg:gap-8">
           <div className="flex flex-col gap-3">
           <label for="email" className={`${lato.className}`}>Email address</label>
         <input id="email" type="email" className="border rounded-lg h-10 px-5 bg-inputBg border-none outline-none"/>

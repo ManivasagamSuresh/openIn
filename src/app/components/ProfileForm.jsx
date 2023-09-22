@@ -9,7 +9,7 @@ const figtree = Figtree({
 
 
 
-function ProfileForm() {
+function ProfileForm({HandleOpen}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,13 +43,13 @@ function ProfileForm() {
   return (
     <div className="bg-profileTrans bg-opacity-75 text-black w-screen h-screen z-50 flex items-center justify-center ">
       <div className="bg-white h-fit w-11/12 md:w-7/12 lg:w-5/12  flex flex-col rounded-2xl shadow-xl">
-        <div className={`header p-7 flex justify-between px-4 py-4 text-xl ${figtree.className} `}><span className="font-bold"> Add new profile</span> <span className="text-greySoft">X</span></div>
+        <div className={`header p-7 flex justify-between px-4 py-4 text-xl ${figtree.className} `}><span className="font-bold"> Add new profile</span> <span className="text-greySoft cursor-pointer" onClick={()=>{HandleOpen()}}>X</span></div>
         <hr className="text-greySoft opacity-50"/>
         <div className="main px-7 py-3">
           
             <div className="flex ">
-              <div className={`flex-1 text-center ${figtree.className} font-semibold mt-2 mb-8 mr-2 anime px-3`}>Basic</div>
-              <div className={`flex-1 text-center ${figtree.className} font-semibold mt-2 mb-8 ml-2 anime`}>Social</div>
+              <div className={`flex-1 text-center ${figtree.className} font-semibold mt-2 mb-8 mr-2 ${currentPage === 1 ? "LineBlue":'Line'}  `}>Basic</div>
+              <div className={`flex-1 text-center ${figtree.className} font-semibold mt-2 mb-8 ml-2 ${currentPage === 1 ? "Linee":'LineBlue'} `}>Social</div>
             </div>
           
 
