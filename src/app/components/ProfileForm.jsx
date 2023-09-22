@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import {  Montserrat, Lato, Poppins, Figtree } from 'next/font/google'
+import axios from "axios";
 
 const monteserat = Montserrat({ subsets: ['latin'] });
 const figtree = Figtree({ 
@@ -36,8 +37,22 @@ function ProfileForm({HandleOpen}) {
     setCurrentPage(1);
   };
 
-  const handleDone = () => {
-    console.log(formData); 
+  const handleDone = async() => {
+    try {
+      // console.log(JSON.stringify(formData));
+      // const profile = JSON.stringify(formData)
+      const response = await fetch('/api/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
   return (
