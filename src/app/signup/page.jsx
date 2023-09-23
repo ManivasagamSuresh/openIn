@@ -12,6 +12,8 @@ import { BiLogoDiscord } from 'react-icons/bi';
 import {  Montserrat, Lato, Poppins } from 'next/font/google'
 import Svg from '../components/Svg';
 import Link from 'next/link';
+import { useFormik } from 'formik';
+import axios from 'axios';
 
 const monteserat = Montserrat({ subsets: ['latin'] });
 const poppins = Poppins({ 
@@ -21,7 +23,30 @@ const lato = Lato({
   weight: '400',
   subsets: ['latin'] })
 
+
+
+
+
 function Signup() {
+
+
+  const formik = useFormik({
+    initialValues:{
+      email:"",
+      password:""
+    },
+    onSubmit:async(values)=>{
+      try {
+        console.log(values)
+        const result  = await axios.post("/api/signup",values);
+        console.log(result);
+        formik.resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  })
+
   return (
     <div className='signin flex h-screen bg-bgSoft'>
 
@@ -49,18 +74,26 @@ function Signup() {
 
 
 
-        <form className="flex flex-col bg-white px-5 py-7 lg:py-10 rounded-lg gap-4 lg:gap-8">
+        <form className="flex flex-col bg-white px-5 py-7 lg:py-10 rounded-lg gap-4 lg:gap-8" onSubmit={formik.handleSubmit}>
           <div className="flex flex-col gap-3">
           <label for="email" className={`${lato.className}`}>Email address</label>
-        <input id="email" type="email" className="border rounded-lg h-10 px-5 bg-inputBg border-none outline-none"/>
+        <input id="email" type="email" 
+               value={formik.values.email}
+               onChange={formik.handleChange}
+               name="email"
+        className="border rounded-lg h-10 px-5 bg-inputBg border-none outline-none"/>
           </div>
 
           <div className="flex flex-col gap-3">     
         <label for="password" className={`${lato.className}`}>Password</label>
-        <input id="password" type="password"  className="border rounded-lg h-10 px-5 bg-inputBg border-none focus:outline-none"/>
+        <input id="password" type="password"  
+               value={formik.values.password}
+               onChange={formik.handleChange}
+               name="password"
+        className="border rounded-lg h-10 px-5 bg-inputBg border-none focus:outline-none"/>
           </div>
         
-        <button className="bg-blueBg p-2 rounded-md text-white font-semibold">Sign Up</button>
+        <button type='submit' className="bg-blueBg p-2 rounded-md text-white font-semibold">Sign Up</button>
         </form>
         <div className="text-center">
         Already have an account? <span className="text-link cursor-pointer"><Link href="/">Sign In</Link>  </span>

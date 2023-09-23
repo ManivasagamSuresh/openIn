@@ -6,7 +6,7 @@ const mongoclient = new MongoClient(url);
 async function connectToDatabase() {
   try {
   const connection =   await mongoclient.connect();
-  const db =  connection.db("OPENINAPP")
+  const db =  connection.db("OPENIN")
   console.log("connected to db")
     return db;
   } catch (error) {

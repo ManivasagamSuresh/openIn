@@ -1,7 +1,10 @@
 'use client'
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {  Montserrat, Lato, Poppins, Figtree } from 'next/font/google'
 import axios from "axios";
+import { useFormik } from "formik";
+import { UserContext } from "../Context";
+import Image from "next/image";
 
 const monteserat = Montserrat({ subsets: ['latin'] });
 const figtree = Figtree({ 
@@ -11,23 +14,12 @@ const figtree = Figtree({
 
 
 function ProfileForm({HandleOpen}) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    Instagram: "",
-    Youtube: "",
-  });
 
+  const {user,setUser} = useContext(UserContext);
+  const [loading,setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  };
+ 
 
   const handleNext = () => {
     setCurrentPage(2);
@@ -37,23 +29,43 @@ function ProfileForm({HandleOpen}) {
     setCurrentPage(1);
   };
 
-  const handleDone = async() => {
+
+  const formik = useFormik({
+    initialValues:{
+      name:"",
+      email:"",
+      phone:"",
+      instagram:"",
+      youtube:"",
+    },
+    onSubmit:async(values)=>{
+      try {
+        setLoading(true);
+        console.log(values)
+        console.log(user)
+        const result  = await axios.post(`/api/profile/${user.email}`,values);
+        setUser({...user,profile:values})
+        setLoading(false);
+        HandleOpen();
+        console.log({...user,profile:values})
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  })
+  const handleDone = async () => {
     try {
-      // console.log(JSON.stringify(formData));
-      // const profile = JSON.stringify(formData)
-      const response = await fetch('/api/profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      console.log(data.data);
+      await formik.handleSubmit();
     } catch (error) {
       console.log(error);
     }
-
   };
+
+
+  
+  // ;
+
 
   return (
     <div className="bg-profileTrans bg-opacity-75 text-black w-screen h-screen z-50 flex items-center justify-center ">
@@ -68,7 +80,7 @@ function ProfileForm({HandleOpen}) {
             </div>
           
 
-          <form className="inputs flex flex-col ">
+          <form className="inputs flex flex-col " onSubmit={formik.handleSubmit}>
             {currentPage === 1 && (
               <div className="basic flex flex-col gap-5">
                 <div className=" flex flex-col gap-2">
@@ -76,8 +88,9 @@ function ProfileForm({HandleOpen}) {
                   <input
                     id="name"
                     type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    name="name"
                     placeholder="Eg. John Doe"
                    className=" border border-greySoft  border-opacity-50 p-1 md:p-2 rounded"
                   />
@@ -87,8 +100,9 @@ function ProfileForm({HandleOpen}) {
                   <input
                     id="email"
                     type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    name="email"
                     placeholder="Eg. John@xyz.com"
                     className=" border border-greySoft  border-opacity-50 p-1 md:p-2 rounded"
                   />
@@ -98,8 +112,9 @@ function ProfileForm({HandleOpen}) {
                   <input
                     id="phone"
                     type="number"
-                    value={formData.phone}
-                    onChange={handleInputChange}
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    name="phone"
                     placeholder="Eg. 1234567890"
                     className=" border border-greySoft border-opacity-50 p-1 md:p-2 rounded"
                   />
@@ -113,8 +128,9 @@ function ProfileForm({HandleOpen}) {
                   <input
                     id="Instagram"
                     type="text"
-                    value={formData.Instagram}
-                    onChange={handleInputChange}
+                    value={formik.values.instagram}
+                    onChange={formik.handleChange}
+                    name="instagram"
                     placeholder="Eg...instagram.com/username"
                     className=" border border-greySoft  border-opacity-50 p-1 md:p-2 rounded"
                   />
@@ -124,8 +140,9 @@ function ProfileForm({HandleOpen}) {
                   <input
                     id="Youtube"
                     type="text"
-                    value={formData.Youtube}
-                    onChange={handleInputChange}
+                    value={formik.values.youtube}
+                    onChange={formik.handleChange}
+                    name="youtube"
                     placeholder="Eg...youtebe/username"
                     className=" border border-greySoft  border-opacity-50 p-1 md:p-2 rounded"
                   />
@@ -142,7 +159,7 @@ function ProfileForm({HandleOpen}) {
             <button onClick={handleBack} className={`py-2 px-3 rounded-lg text-white bg-blueS ${figtree.className} cursor-pointer`}>Back</button>
           )}
            {currentPage === 2 && (
-            <button onClick={handleDone}className={`py-2 px-3 rounded-lg text-white bg-blueS ${figtree.className} cursor-pointer`}>Done</button>
+            <button type="submit" onClick={handleDone}className={`py-2 px-3 rounded-lg text-white bg-blueS ${figtree.className} cursor-pointer flex gap-2`}>Done {loading && <Image src="/loading-gif.gif" alt="gif" width={20} height={20}/>} </button>
           )}
 
           

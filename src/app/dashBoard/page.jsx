@@ -1,11 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Menu from '../components/Menu';
 import DashboardMain from '../components/DashboardMain';
 import MenuMobile from '../components/MenuMobile';
 import ProfileForm from '../components/ProfileForm';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '../Context';
 
 
 
@@ -15,13 +16,14 @@ function Dashboard  () {
   const [open,setOpen] = useState(false);
   const {status,data} = useSession();
   const router = useRouter()
-  useEffect(()=>{
-    if(status == "unauthenticated"){
-      router.push("/")
-    }
-  },[data])
+  // useEffect(()=>{
+  //   if(status == "unauthenticated"){
+  //     router.push("/")
+  //   }
+  // },[data])
   
-  
+  const {user} = useContext(UserContext);
+  // console.log(user);
 
 
   const HandleOpen = ()=>{

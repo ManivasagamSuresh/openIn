@@ -50,7 +50,7 @@ function Topbar() {
             <AiOutlineSearch className='hidden lg:block absolute right-8 text-greySoft h-5 w-5 md:h-7 md:w-7 lg:h-4 lg:w-4'/>
         </div>
         <div><IoMdNotificationsOutline  className='h-5 w-5 md:h-7 md:w-7'/> </div>
-        <div className='rounded-full h-7 w-7  md:h-10 md:w-10 relative overflow-hidden' ><Image src={ data?.user ? data.user.image:"/profile.avif" } fill  className='object-cover'/> </div>
+        <div className='rounded-full h-7 w-7  md:h-10 md:w-10 relative overflow-hidden' ><Image src={ data?.user ? data.user.image:"/profile.avif" } fill alt='pro'  className='object-cover'/> </div>
         </div>
 
     </div>}

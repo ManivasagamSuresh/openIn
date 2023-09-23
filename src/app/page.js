@@ -10,6 +10,11 @@ import Link from "next/link";
 import {  Montserrat, Lato, Poppins } from 'next/font/google'
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
+import { useFormik } from "formik";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { UserContext } from "./Context";
+import Image from "next/image";
 
 
 
@@ -25,9 +30,10 @@ const lato = Lato({
 
 export default function Home() {
   const {data,status} = useSession();
-  
+  const [loading,setLoading] = useState(false);
 
   const router = useRouter();
+  const {user,setUser} = useContext(UserContext);
 
 const HandleGoogleLogin = async()=>{
   try {
@@ -38,12 +44,42 @@ const HandleGoogleLogin = async()=>{
   
 }
 
-if(status === 'loading'){
-  return <div className="text-3xl font-bold flex items-center justify-center h-screen w-screen">Loading...</div>
-}
+// if(status === 'loading'){
+//   return <div className="text-3xl font-bold flex items-center justify-center h-screen w-screen">Loading...</div>
+// }
 if(status === "authenticated"){
-  router.push('dashBoard')
+  // console.log(data);
+  setUser(data.user)
+  router.push('/dashBoard')
 }
+
+
+const formik = useFormik({
+  initialValues:{
+    email:"",
+    password:""
+  },
+  onSubmit:async(values)=>{
+    try {
+      setLoading(true)
+      console.log(values)
+      const result  = await axios.post("/api/login",values);
+      console.log(result);
+      formik.resetForm();
+      if(result.data == "success"){
+        setUser(values)
+        setLoading(true)
+        router.push("/dashBoard")
+      }else{
+        alert(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+})
+
+
   return (
 <div className='signin flex h-screen bg-bgSoft'>
 
@@ -81,18 +117,26 @@ if(status === "authenticated"){
         </div>
         </div>
 
-        <form className="flex flex-col bg-white px-5 py-7 lg:py-8 rounded-lg gap-4 lg:gap-8">
+        <form className="flex flex-col bg-white px-5 py-7 lg:py-8 rounded-lg gap-4 lg:gap-8" onSubmit={formik.handleSubmit}>
           <div className="flex flex-col gap-3">
           <label htmlFor="email" className={`${lato.className}`}>Email address</label>
-        <input id="email" type="email" className="border rounded-lg h-10 px-5 bg-inputBg border-none outline-none"/>
+        <input id="email" type="email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        name="email"
+        className="border rounded-lg h-10 px-5 bg-inputBg border-none outline-none"/>
           </div>
 
           <div className="flex flex-col gap-3">     
         <label htmlFor="password" className={`${lato.className}`}>Password</label>
-        <input id="password" type="password"  className="border rounded-lg h-10 px-5 bg-inputBg border-none focus:outline-none"/>
+        <input id="password" type="password"  
+         value={formik.values.password}
+         onChange={formik.handleChange}
+         name="password"
+        className="border rounded-lg h-10 px-5 bg-inputBg border-none focus:outline-none"/>
           </div>
         <div className="text-link cursor-pointer">Forgot Password?</div>
-        <button className="bg-blueBg p-2 rounded-md text-white font-semibold"> Sign In</button>
+        <button type="submit" className="bg-blueBg p-2 rounded-md text-white font-semibold flex items-center justify-center gap-2"> Sign In {loading && <Image src="/loading-gif.gif" alt="gif" width={20} height={20}/>}</button>
         </form>
         <div className="text-center">
         Don’t have an account? <span className="text-link cursor-pointer"><Link href="/signup">Register here</Link>  </span>
