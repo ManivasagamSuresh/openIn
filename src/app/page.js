@@ -63,7 +63,7 @@ const formik = useFormik({
     try {
       setLoading(true)
       console.log(values)
-      const result  = await axios.post("http://localhost:3000/api/login",values);
+      const result  = await axios.post("https://splendorous-stroopwafel-bc755e.netlify.app/api/login",values);
       console.log(result);
       formik.resetForm();
       if(result.data == "success"){
